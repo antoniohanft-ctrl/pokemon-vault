@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="Deine Pokémon-Kartensammlung mit Kamera erfassen und Werte verwalten.">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<title>Pokémon Vault – Kartensammlung</title>
+<style>
+:root{--bg:#0b1020;--panel:#131b30;--panel2:#1a2540;--line:#2c3a59;--text:#f4f7ff;--muted:#a9b5ce;--accent:#79a7ff;--good:#72ddb2;--warn:#ffd27d}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(140deg,#0b1020,#101b32 65%,#11162a);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{padding:26px clamp(16px,4vw,48px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{display:flex;gap:12px;align-items:center}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#ffcb55,#ff795d);display:grid;place-items:center;color:#1a2030;font-size:24px;font-weight:900}.eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:.13em;font-size:11px;font-weight:800}h1{font-size:clamp(23px,3vw,34px);margin:2px 0}p{margin:5px 0;color:var(--muted)}main{max-width:1450px;margin:auto;padding:24px clamp(14px,3vw,38px) 60px}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}.stat,.panel{background:rgba(19,27,48,.94);border:1px solid var(--line);border-radius:18px}.stat{padding:16px}.stat label{display:block;color:var(--muted);font-size:12px}.stat strong{font-size:24px;display:block;margin-top:4px}.layout{display:grid;grid-template-columns:minmax(320px,.85fr) minmax(0,1.4fr);gap:18px;align-items:start}.panel{padding:18px;margin-bottom:18px}.panel h2{font-size:18px;margin:0 0 12px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}label{font-size:12px;color:var(--muted)}button,.linkbtn{touch-action:manipulation}input,select,textarea{font-size:16px;width:100%;background:#0c1427;border:1px solid #344362;border-radius:10px;color:var(--text);padding:10px;font:inherit;min-width:0}input[type=file]{padding:8px}input:focus,select:focus,textarea:focus{outline:2px solid #719cff;border-color:transparent}button,.linkbtn{border:0;border-radius:10px;padding:10px 13px;background:var(--accent);color:#071226;font-weight:800;cursor:pointer;font:inherit;text-decoration:none;display:inline-flex;justify-content:center;align-items:center;gap:7px}button.secondary,.linkbtn.secondary{background:#263452;color:var(--text);border:1px solid #3b4c6e}button.danger{background:#562b3a;color:#ffd9df}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.drop{border:1px dashed #4a6594;border-radius:14px;padding:14px;text-align:center;background:#0e172c}.preview{width:100%;max-height:310px;object-fit:contain;border-radius:12px;background:#0a1020;margin-top:10px}.hint{font-size:12px;color:var(--muted)}.status{padding:10px 12px;border-radius:10px;background:#0d172a;border:1px solid var(--line);color:var(--muted);font-size:13px;margin-top:10px}.status.good{color:var(--good)}.status.warn{color:var(--warn)}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}.toolbar input{flex:1;min-width:180px}.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}.card{background:#0e172a;border:1px solid var(--line);border-radius:15px;overflow:hidden}.card img{width:100%;height:190px;object-fit:contain;background:#090f1f}.cardbody{padding:12px}.card h3{font-size:15px;margin:0 0 5px}.meta{color:var(--muted);font-size:12px}.pricegrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:10px 0}.price{background:#17223b;border-radius:8px;padding:7px;font-size:12px}.price b{display:block;font-size:14px;color:var(--text)}.cardactions{display:flex;gap:6px;flex-wrap:wrap}.cardactions button,.cardactions a{font-size:12px;padding:7px 9px}.empty{border:1px dashed var(--line);border-radius:14px;padding:26px;text-align:center;color:var(--muted)}.pill{font-size:11px;background:#293b5f;border-radius:999px;padding:4px 8px;color:#dce8ff}.notice{background:#302718;border:1px solid #735a2d;color:#ffdfa0;padding:12px;border-radius:12px;font-size:13px;margin-bottom:16px}.source-row{display:flex;gap:8px;flex-wrap:wrap}.source-row a{font-size:12px}.footer{font-size:12px;color:var(--muted);margin-top:20px}.price-update-row{display:grid;grid-template-columns:minmax(180px,1.3fr) repeat(3,minmax(100px,.7fr));gap:8px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.price-update-row:last-child{border-bottom:0}.price-update-row input{padding:8px}.price-update-name{font-weight:750}.price-update-meta{font-size:12px;color:var(--muted)}.price-update-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}.price-update-links a{font-size:11px;color:#bcd0ff}.modal-backdrop{position:fixed;inset:0;background:#050914d9;z-index:50;display:none;align-items:center;justify-content:center;padding:16px}.modal{width:min(1100px,100%);max-height:90vh;overflow:auto;background:#131b30;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 20px 70px #0008}.modal-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.modal-body{margin-top:14px}@media(max-width:700px){.price-update-row{grid-template-columns:1fr 1fr}.price-update-row .price-update-info{grid-column:1/-1}}
+@media(max-width:950px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.stats{gap:8px}.stat strong{font-size:20px}.pricegrid{grid-template-columns:1fr 1fr}.price:last-child{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="logo">P</div><div><div class="eyebrow">Deine persönliche Sammlung</div><h1>Pokémon Vault</h1><p>Karten erfassen · Bestand verwalten · Marktpreise vergleichen</p></div></div><div class="actions" style="margin:0"><button class="secondary" id="installAppBtn" hidden>📲 App installieren</button><button class="secondary" id="exportJson">Backup exportieren</button><button class="secondary" id="importBtn">Backup importieren</button><input id="importFile" type="file" accept=".json,.csv" hidden></div></header>
+<main>
+<div class="notice"><b>Transparenz zu Live-Preisen:</b> Diese Version erkennt Text auf Kartenfotos per OCR und speichert deine Sammlung lokal in diesem Browser. Sie liest Preise nicht heimlich aus Cardmarket, Collectr oder TCGplayer aus. Live-APIs benötigen passende Freigaben/Zugangsdaten; siehe README. Preisfelder lassen sich manuell pflegen und mit den Suchlinks abgleichen.</div>
+<section class="stats">
+<div class="stat"><label>Kartenarten</label><strong id="statKinds">0</strong></div><div class="stat"><label>Karten insgesamt</label><strong id="statQty">0</strong></div><div class="stat"><label>Sammlungswert Cardmarket</label><strong id="statDE">0,00 €</strong></div><div class="stat"><label>Internationaler Vergleich*</label><strong id="statIntl">0,00 €</strong></div>
+</section>
+<div class="layout">
+<div>
+<section class="panel">
+<h2>① Kartenfoto hochladen</h2>
+<div class="drop"><label for="photo">Vorderseite der Karte (JPG, PNG, WEBP)</label><input id="photo" type="file" accept="image/*" capture="environment"><img id="preview" class="preview" alt="Kartenvorschau" hidden><div class="actions"><button id="ocrBtn" type="button">Bildtext erkennen (OCR)</button><button id="clearPhoto" type="button" class="secondary">Bild entfernen</button></div><div id="ocrStatus" class="status">Foto auswählen. Für bessere Ergebnisse: gerade, scharf, ohne Spiegelung.</div></div>
+<p class="hint">OCR liest sichtbaren Text aus. Es identifiziert die Karte nicht garantiert eindeutig. Name, Set und Nummer bitte vor dem Speichern prüfen.</p>
+</section>
+<section class="panel">
+<div class="section-head"><h2>② Kartendaten</h2><span id="editPill" class="pill">Neue Karte</span></div>
+<form id="cardForm">
+<input id="recordId" type="hidden">
+<div class="formgrid">
+<div class="field full"><label for="name">Kartenname *</label><input id="name" required placeholder="z. B. Glurak ex"></div>
+<div class="field"><label for="set">Set / Edition</label><input id="set" placeholder="z. B. 151"></div>
+<div class="field"><label for="number">Kartennummer</label><input id="number" placeholder="z. B. 199/165"></div>
+<div class="field"><label for="language">Sprache</label><select id="language"><option>Deutsch</option><option>Englisch</option><option>Japanisch</option><option>Französisch</option><option>Andere</option></select></div>
+<div class="field"><label for="variant">Variante</label><select id="variant"><option>Normal</option><option>Holo</option><option>Reverse Holo</option><option>Full Art</option><option>Illustration Rare</option><option>Special Illustration Rare</option><option>Promo</option><option>Master Ball</option><option>Poké Ball</option><option>Andere</option></select></div>
+<div class="field"><label for="condition">Zustand</label><select id="condition"><option>Near Mint</option><option>Excellent</option><option>Good / Played</option><option>Heavily Played</option><option>Damaged</option></select></div>
+<div class="field"><label for="grading">Grading</label><select id="grading"><option>Ungraded</option><option>PSA 10</option><option>PSA 9</option><option>PSA 8</option><option>CGC</option><option>Beckett</option><option>Andere</option></select></div>
+<div class="field"><label for="qty">Anzahl</label><input id="qty" type="number" min="1" value="1" required></div>
+<div class="field"><label for="cost">Einkaufspreis pro Karte (€)</label><input id="cost" type="number" min="0" step="0.01" placeholder="0,00"></div>
+<div class="field"><label for="cardmarket">Cardmarket €/Stück</label><input id="cardmarket" type="number" min="0" step="0.01" placeholder="0,00"></div>
+<div class="field"><label for="collectr">Collectr €/Stück</label><input id="collectr" type="number" min="0" step="0.01" placeholder="0,00"></div>
+<div class="field"><label for="tcgplayer">TCGplayer €/Stück</label><input id="tcgplayer" type="number" min="0" step="0.01" placeholder="0,00"></div>
+<div class="field"><label for="priceDate">Preis zuletzt geprüft</label><input id="priceDate" type="date"></div>
+<div class="field full"><label for="notes">Notizen / OCR-Text</label><textarea id="notes" rows="2" placeholder="Erkannter Text, besondere Merkmale ..."></textarea></div>
+</div>
+<div class="actions"><button type="submit" id="saveBtn">Karte speichern</button><button type="button" class="secondary" id="resetBtn">Formular leeren</button></div>
+<div id="saveStatus" class="status" hidden></div>
+</form>
+</section>
+<section class="panel">
+<h2>Preisquellen öffnen</h2><p>Suchbegriffe werden aus Name und Kartennummer erstellt. Vergleiche immer Sprache, Zustand, Druck und Grading.</p>
+<div class="source-row"><a class="linkbtn secondary" id="searchCM" target="_blank" rel="noopener">Cardmarket suchen ↗</a><a class="linkbtn secondary" id="searchCollectr" target="_blank" rel="noopener">Collectr öffnen ↗</a><a class="linkbtn secondary" id="searchTCG" target="_blank" rel="noopener">TCGplayer suchen ↗</a></div>
+</section>
+</div>
+<div>
+<section class="panel">
+<div class="section-head"><h2>Deine Sammlung</h2><span class="pill" id="countPill">0 Einträge</span></div>
+<div class="toolbar"><input id="search" placeholder="Suche nach Name, Set oder Nummer …"><select id="sort" style="max-width:180px"><option value="name">Name A–Z</option><option value="value">Wert: hoch–niedrig</option><option value="recent">Zuletzt hinzugefügt</option></select><button class="secondary" id="updatePricesBtn">💶 Preise aktualisieren</button><button class="secondary" id="exportCsv">CSV exportieren</button></div>
+<div id="cards" class="cards"></div>
+<div id="priceModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="priceModalTitle">
+  <section class="modal">
+    <div class="modal-head">
+      <div><h2 id="priceModalTitle">Preise deiner Sammlung aktualisieren</h2><p>Öffne die Preisquellen zum Vergleichen, trage die aktuellen Werte ein und speichere alle Änderungen auf einmal.</p></div>
+      <button class="secondary" id="closePriceModal">Schließen ✕</button>
+    </div>
+    <div class="notice" style="margin-top:14px"><b>Wichtig:</b> Dieser Button ruft keine Live-Preise automatisch ab. Er öffnet Suchlinks und bietet eine schnelle Sammelbearbeitung für die Werte, die du recherchiert hast.</div>
+    <div id="priceUpdateRows" class="modal-body"></div>
+    <div class="actions"><button id="saveAllPricesBtn">Alle Preisänderungen speichern</button><button class="secondary" id="cancelPriceUpdate">Abbrechen</button></div>
+    <div id="priceUpdateStatus" class="status" hidden></div>
+  </section>
+</div>
+<div class="footer">* Internationaler Vergleich = höherer der beiden eingetragenen Collectr- und TCGplayer-Werte. Werte sind Schätzungen, keine garantierten Verkaufserlöse. Daten werden in diesem Browser auf diesem Gerät gespeichert; regelmäßig ein Backup exportieren.</div>
+</section>
+<section class="panel">
+<h2>So klappt die Erkennung besser</h2>
+<ul style="color:var(--muted);padding-left:20px"><li>Die gesamte Karte muss sichtbar und möglichst plan fotografiert sein.</li><li>Set-Symbol und Kartennummer sind wichtig, weil es viele gleiche Namen und Nachdrucke gibt.</li><li>OCR ist Texterkennung, keine zuverlässige Bilddatenbank. Ein Set-Abgleich bzw. KI-Vision-Modul wäre der nächste Schritt.</li><li>Bei Grading-Karten Foto der Vorderseite und Labeldaten prüfen; rohe Karten nicht mit Slabs vergleichen.</li></ul>
+</section>
+</div>
+</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let db, currentImage=null, ocrReady=false;
+const DB_NAME='pokemon-vault-db', STORE='cards';
+function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>req.result.createObjectStore(STORE,{keyPath:'id'});req.onsuccess=()=>{db=req.result;resolve(db)};req.onerror=()=>reject(req.error)})}
+function allCards(){return new Promise((resolve,reject)=>{const r=db.transaction(STORE).objectStore(STORE).getAll();r.onsuccess=()=>resolve(r.result||[]);r.onerror=()=>reject(r.error)})}
+function putCard(card){return new Promise((resolve,reject)=>{const r=db.transaction(STORE,'readwrite').objectStore(STORE).put(card);r.onsuccess=()=>resolve();r.onerror=()=>reject(r.error)})}
+function deleteCard(id){return new Promise((resolve,reject)=>{const r=db.transaction(STORE,'readwrite').objectStore(STORE).delete(id);r.onsuccess=resolve;r.onerror=()=>reject(r.error)})}
+const euro=n=>Number(n||0).toLocaleString('de-DE',{style:'currency',currency:'EUR'});
+const val=id=>$(id).value.trim();
+const num=id=>val(id)===''?0:Number(val(id));
+function buildSearch(){let q=[val('name'),val('set'),val('number')].filter(Boolean).join(' ');$('searchCM').href='https://www.cardmarket.com/en/Pokemon/Products/Search?searchString='+encodeURIComponent(q);$('searchCollectr').href='https://www.collectr.com/';$('searchTCG').href='https://www.tcgplayer.com/search/pokemon/product?q='+encodeURIComponent(q)}
+['name','set','number'].forEach(id=>$(id).addEventListener('input',buildSearch));
+$('photo').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{currentImage=reader.result;$('preview').src=currentImage;$('preview').hidden=false;$('ocrStatus').textContent='Bild geladen. Starte OCR, um sichtbaren Text auszulesen.'};reader.readAsDataURL(f)});
+$('clearPhoto').onclick=()=>{currentImage=null;$('photo').value='';$('preview').hidden=true;$('preview').src='';$('ocrStatus').textContent='Kein Bild ausgewählt.'};
+$('ocrBtn').onclick=async()=>{if(!currentImage){$('ocrStatus').textContent='Bitte zuerst ein Kartenbild auswählen.';return} $('ocrStatus').textContent='OCR-Bibliothek wird geladen …';$('ocrStatus').className='status';try{if(!window.Tesseract){await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';s.onload=resolve;s.onerror=reject;document.head.appendChild(s)})} $('ocrStatus').textContent='Text wird aus dem Foto gelesen …';const result=await Tesseract.recognize(currentImage,'eng+deu',{logger:m=>{if(m.status&&m.progress!==undefined)$('ocrStatus').textContent=m.status+' '+Math.round(m.progress*100)+'%'}});const text=result.data.text.trim();$('notes').value=($('notes').value?$('notes').value+'\n':'')+'OCR:\n'+text;const lines=text.split(/\n/).map(x=>x.trim()).filter(x=>x.length>2);if(!$('name').value&&lines.length)$('name').value=lines[0].slice(0,100);buildSearch();$('ocrStatus').textContent=text?'Text ausgelesen. Bitte Kartenname, Set und Nummer kontrollieren.':'Kein klarer Text erkannt – Bild neu aufnehmen.';$('ocrStatus').className='status '+(text?'good':'warn')}catch(e){$('ocrStatus').textContent='OCR konnte nicht geladen werden. Prüfe die Internetverbindung; alternativ Daten manuell eintragen.';$('ocrStatus').className='status warn'}};
+function resetForm(){ $('cardForm').reset();$('recordId').value='';$('qty').value=1;$('editPill').textContent='Neue Karte';$('saveBtn').textContent='Karte speichern';currentImage=null;$('preview').hidden=true;$('photo').value='';$('saveStatus').hidden=true;$('priceDate').value=new Date().toISOString().slice(0,10);buildSearch()}
+$('resetBtn').onclick=resetForm;
+$('cardForm').onsubmit=async e=>{e.preventDefault();const id=val('recordId')||crypto.randomUUID();const existing=(await allCards()).find(c=>c.id===id);const card={id,name:val('name'),set:val('set'),number:val('number'),language:val('language'),variant:val('variant'),condition:val('condition'),grading:val('grading'),qty:Math.max(1,num('qty')),cost:num('cost'),cardmarket:num('cardmarket'),collectr:num('collectr'),tcgplayer:num('tcgplayer'),priceDate:val('priceDate'),notes:val('notes'),image:currentImage??existing?.image??null,updatedAt:Date.now()};await putCard(card);$('saveStatus').hidden=false;$('saveStatus').textContent='Karte gespeichert.';$('saveStatus').className='status good';resetForm();await render()};
+function editCard(c){$('recordId').value=c.id;for(const k of ['name','set','number','language','variant','condition','grading','qty','cost','cardmarket','collectr','tcgplayer','priceDate','notes'])$(k).value=c[k]??'';currentImage=c.image||null;if(currentImage){$('preview').src=currentImage;$('preview').hidden=false}else $('preview').hidden=true;$('editPill').textContent='Bearbeiten';$('saveBtn').textContent='Änderungen speichern';$('ocrStatus').textContent='Gespeicherte Karte geladen.';buildSearch();window.scrollTo({top:0,behavior:'smooth'})}
+async function render(){let cards=await allCards();const q=$('search').value.toLowerCase();cards=cards.filter(c=>[c.name,c.set,c.number,c.language,c.variant].join(' ').toLowerCase().includes(q));if($('sort').value==='value')cards.sort((a,b)=>(b.qty*Math.max(b.cardmarket,b.collectr,b.tcgplayer))-(a.qty*Math.max(a.cardmarket,a.collectr,a.tcgplayer)));else if($('sort').value==='recent')cards.sort((a,b)=>b.updatedAt-a.updatedAt);else cards.sort((a,b)=>a.name.localeCompare(b.name,'de'));const all=await allCards();$('statKinds').textContent=all.length;$('statQty').textContent=all.reduce((s,c)=>s+c.qty,0);$('statDE').textContent=euro(all.reduce((s,c)=>s+c.qty*c.cardmarket,0));$('statIntl').textContent=euro(all.reduce((s,c)=>s+c.qty*Math.max(c.collectr,c.tcgplayer),0));$('countPill').textContent=all.length+' Einträge';const root=$('cards');root.innerHTML='';if(!cards.length){root.innerHTML='<div class="empty" style="grid-column:1/-1">Noch keine Karten – lade links ein Foto hoch und speichere deine erste Karte.</div>';return}for(const c of cards){const el=document.createElement('article');el.className='card';const img=c.image?`<img alt="Kartenbild" src="${c.image}">`:`<div style="height:190px;display:grid;place-items:center;background:#090f1f;color:#6f7e9b;font-size:46px">🃏</div>`;el.innerHTML=img+`<div class="cardbody"><h3></h3><div class="meta"></div><div class="pricegrid"><div class="price">Cardmarket<b>${euro(c.cardmarket)}</b></div><div class="price">Collectr<b>${euro(c.collectr)}</b></div><div class="price">TCGplayer<b>${euro(c.tcgplayer)}</b></div></div><div class="meta">Besitz: ${c.qty} · CM Gesamt: ${euro(c.qty*c.cardmarket)}</div><div class="cardactions" style="margin-top:10px"><button class="secondary edit">Bearbeiten</button><button class="secondary links">Preise suchen ↗</button><button class="danger del">Löschen</button></div></div>`;el.querySelector('h3').textContent=c.name;el.querySelector('.meta').textContent=[c.set,c.number,c.language,c.variant,c.condition,c.grading].filter(Boolean).join(' · ');el.querySelector('.edit').onclick=()=>editCard(c);el.querySelector('.del').onclick=async()=>{if(confirm('Diese Karte aus deiner Sammlung löschen?')){await deleteCard(c.id);await render()}};el.querySelector('.links').onclick=()=>{const q=encodeURIComponent([c.name,c.set,c.number].filter(Boolean).join(' '));window.open('https://www.cardmarket.com/en/Pokemon/Products/Search?searchString='+q,'_blank','noopener');window.open('https://www.tcgplayer.com/search/pokemon/product?q='+q,'_blank','noopener')};root.appendChild(el)}}
+
+$('search').oninput=render;$('sort').onchange=render;
+function priceSearchLinks(c){
+  const q=encodeURIComponent([c.name,c.set,c.number,c.language].filter(Boolean).join(' '));
+  return `<div class="price-update-links"><a href="https://www.cardmarket.com/en/Pokemon/Products/Search?searchString=${q}" target="_blank" rel="noopener">Cardmarket ↗</a><a href="https://www.collectr.com/" target="_blank" rel="noopener">Collectr ↗</a><a href="https://www.tcgplayer.com/search/pokemon/product?q=${q}" target="_blank" rel="noopener">TCGplayer ↗</a></div>`;
+}
+async function openPriceUpdater(){
+  const all=await allCards();
+  const root=$('priceUpdateRows');root.innerHTML='';
+  if(!all.length){root.innerHTML='<div class="empty">Noch keine Karten in deiner Sammlung. Füge zuerst Karten hinzu.</div>'}
+  else{
+    all.sort((a,b)=>a.name.localeCompare(b.name,'de'));
+    for(const c of all){
+      const row=document.createElement('div');row.className='price-update-row';row.dataset.id=c.id;
+      const info=document.createElement('div');info.className='price-update-info';
+      const name=document.createElement('div');name.className='price-update-name';name.textContent=c.name;
+      const meta=document.createElement('div');meta.className='price-update-meta';meta.textContent=[c.set,c.number,c.language,c.variant].filter(Boolean).join(' · ')||'Keine Set-/Nummer-Angaben';
+      info.append(name,meta);
+      const links=document.createElement('div');links.innerHTML=priceSearchLinks(c);info.append(links.firstElementChild);
+      row.append(info);
+      for(const [key,label] of [['cardmarket','Cardmarket €'],['collectr','Collectr €'],['tcgplayer','TCGplayer €']]){
+        const field=document.createElement('div');field.className='field';
+        const lab=document.createElement('label');lab.textContent=label;
+        const input=document.createElement('input');input.type='number';input.min='0';input.step='0.01';input.value=Number(c[key]||0) ? Number(c[key]).toFixed(2) : '';input.placeholder='Preis/Stück';input.dataset.priceKey=key;input.setAttribute('aria-label',c.name+' '+label);
+        field.append(lab,input);row.append(field);
+      }
+      root.append(row);
+    }
+  }
+  $('priceUpdateStatus').hidden=true;$('priceModalBackdrop').style.display='flex';
+}
+function closePriceUpdater(){$('priceModalBackdrop').style.display='none'}
+$('updatePricesBtn').onclick=openPriceUpdater;
+$('closePriceModal').onclick=closePriceUpdater;
+$('cancelPriceUpdate').onclick=closePriceUpdater;
+$('priceModalBackdrop').addEventListener('click',e=>{if(e.target===$('priceModalBackdrop'))closePriceUpdater()});
+$('saveAllPricesBtn').onclick=async()=>{
+  const btn=$('saveAllPricesBtn');btn.disabled=true;btn.textContent='Speichere …';
+  try{
+    const all=await allCards();const byId=new Map(all.map(c=>[c.id,c]));let changed=0;
+    for(const row of $('priceUpdateRows').querySelectorAll('.price-update-row')){
+      const card=byId.get(row.dataset.id);if(!card)continue;
+      for(const input of row.querySelectorAll('input[data-price-key]')){
+        const raw=input.value.trim();const value=raw===''?0:Number(raw);
+        if(Number.isFinite(value)&&value>=0){if(Number(card[input.dataset.priceKey]||0)!==value){card[input.dataset.priceKey]=value;changed++}}
+      }
+      card.priceDate=new Date().toISOString().slice(0,10);card.updatedAt=Date.now();await putCard(card);
+    }
+    $('priceUpdateStatus').hidden=false;$('priceUpdateStatus').className='status good';$('priceUpdateStatus').textContent=`Preise gespeichert. ${changed} Preisfeld(er) geändert. Prüfdatum aktualisiert.`;
+    await render();
+  }catch(err){$('priceUpdateStatus').hidden=false;$('priceUpdateStatus').className='status warn';$('priceUpdateStatus').textContent='Speichern fehlgeschlagen: '+err.message}
+  finally{btn.disabled=false;btn.textContent='Alle Preisänderungen speichern'}
+};
+
+function download(name,content,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+$('exportJson').onclick=async()=>download('pokemon-vault-backup.json',JSON.stringify(await allCards(),null,2),'application/json');
+$('exportCsv').onclick=async()=>{const cs=await allCards();const cols=['name','set','number','language','variant','condition','grading','qty','cost','cardmarket','collectr','tcgplayer','priceDate','notes'];const esc=v=>'"'+String(v??'').replaceAll('"','""')+'"';download('pokemon-sammlung.csv',[cols.join(';'),...cs.map(c=>cols.map(k=>esc(c[k])).join(';'))].join('\r\n'),'text/csv;charset=utf-8')};
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const txt=await f.text();if(f.name.toLowerCase().endsWith('.json')){const arr=JSON.parse(txt);if(!Array.isArray(arr))throw Error('JSON muss eine Kartenliste enthalten');for(const c of arr)await putCard({...c,id:c.id||crypto.randomUUID()})}else{const delimiter=(txt.split(/\r?\n/)[0].match(/;/g)||[]).length >= (txt.split(/\r?\n/)[0].match(/,/g)||[]).length ? ';' : ',';const rows=txt.split(/\r?\n/).filter(Boolean).map(x=>{const out=[];let cur='',quoted=false;for(let i=0;i<x.length;i++){const ch=x[i];if(ch==='"'&&x[i+1]==='"'){cur+='"';i++}else if(ch==='"'){quoted=!quoted}else if(ch===delimiter&&!quoted){out.push(cur);cur=''}else cur+=ch}out.push(cur);return out});const norm=s=>String(s||'').trim().toLowerCase().replace(/[()€]/g,'').replace(/\s+/g,' ');const aliases={name:['name','kartenname'],set:['set','set / edition','edition'],number:['number','kartennummer'],language:['language','sprache'],variant:['variant','variante'],condition:['condition','zustand'],grading:['grading','grading / note'],qty:['qty','anzahl'],cost:['cost','einkaufspreis'],cardmarket:['cardmarket','deutschland preis/stück','deutschland preis/stück '],collectr:['collectr','collectr preis/stück'],tcgplayer:['tcgplayer','tcgplayer preis/stück'],priceDate:['pricedate','preisstand'],notes:['notes','notizen']};const cols=rows.shift().map(norm);for(const row of rows){const c={};for(const key of Object.keys(aliases)){const ix=cols.findIndex(h=>aliases[key].some(a=>h===norm(a)||h.startsWith(norm(a))));if(ix>=0)c[key]=row[ix]}if(c.name)await putCard({...c,id:crypto.randomUUID(),qty:Number(c.qty)||1,cost:Number(c.cost)||0,cardmarket:Number(c.cardmarket)||0,collectr:Number(c.collectr)||0,tcgplayer:Number(c.tcgplayer)||0,updatedAt:Date.now()})}}await render();alert('Import abgeschlossen.')}catch(err){alert('Import fehlgeschlagen: '+err.message)}e.target.value=''};
+(async()=>{await openDB();$('priceDate').value=new Date().toISOString().slice(0,10);await render()})().catch(e=>alert('Lokaler Speicher konnte nicht gestartet werden: '+e.message));
+// Installierbare PWA: funktioniert nach Veröffentlichung über HTTPS oder localhost.
+let deferredInstallPrompt=null;
+const installButton=$('installAppBtn');
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;installButton.hidden=false});
+installButton.onclick=async()=>{if(!deferredInstallPrompt){alert('Wenn der Installationsbutton nicht verfügbar ist: im Browser-Menü „Zum Startbildschirm hinzufügen“ bzw. „App installieren“ auswählen.');return}deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;installButton.hidden=true};
+window.addEventListener('appinstalled',()=>{installButton.hidden=true});
+if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost')){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
+</script>
+</body></html>
