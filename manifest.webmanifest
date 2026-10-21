@@ -1,0 +1,26 @@
+{
+  "id": "./",
+  "name": "Pokémon Vault – Kartensammlung",
+  "short_name": "Pokémon Vault",
+  "description": "Pokémon-Karten mit der Handykamera erfassen und Sammlung verwalten.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1020",
+  "theme_color": "#0b1020",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
